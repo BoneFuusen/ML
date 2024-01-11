@@ -1,4 +1,8 @@
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn import preprocessing
+from imblearn.under_sampling import RandomUnderSampler
+from sklearn.model_selection import train_test_split
 
 def preprocess(data_file):
     data = pd.read_csv(data_file)
@@ -39,7 +43,17 @@ def preprocess(data_file):
 
     data = data_filtered
 
+    y = data["Diabetes_012"]
     X = data.drop(["Diabetes_012"], axis=1)
 
-    return X
+    scaler = StandardScaler()
+    X = scaler.fit_transform(X)
+
+
+    rus = RandomUnderSampler()
+    X_res, y_res = rus.fit_resample(X, y)
+
+    X_train, X_test, y_train, y_test = train_test_split(X_res,y_res,test_size=0.2,random_state=0)
+
+    return X_test, y_test
     

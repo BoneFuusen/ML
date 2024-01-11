@@ -1,4 +1,5 @@
 import streamlit as st
+from sklearn.metrics import accuracy_score
 import joblib
 from streamlit_option_menu import option_menu
 from tensorflow import keras
@@ -129,16 +130,42 @@ if selected == "Prediction Tool(file)":
     st.header("Insert the .csv file and choose the model you'd like to use for prediction")
 
     uploaded_file = st.file_uploader("Insert the CSV-file", type="csv")
+    df, y_test = pp.preprocess(uploaded_file)
 
     st.subheader('Choose one model from the list:')
     #selected_opt = st.checkbox(["GaussianNB", "GradientBoosting", "Bagging", "KMeans", "NW", "Stacking"])
-    check1 =  st.checkbox('GaussianNB')
+    check1 = st.checkbox('GaussianNB')
+    check2 = st.checkbox('Bagging')
+    check3 = st.checkbox('GradientBoosting')
+    check5 = st.checkbox('Stacking')
+    check6 = st.checkbox('NW')
 
     if check1:
         with open('models/GaussianNB', 'rb') as file:
             model = pickle.load(file)
-            df = pp.preprocess(uploaded_file)
             predictions = model.predict(df)
+            st.write("Accuracy score for GaussianNB:", accuracy_score(y_test, predictions))
+    if check2:
+        with open('models/Bagging', 'rb') as file:
+            model = pickle.load(file)
+            predictions = model.predict(df)
+            st.write("Accuracy score for Bagging:", accuracy_score(y_test, predictions))
+    if check3:
+        with open('models/GradientBoosting', 'rb') as file:
+            model = pickle.load(file)
+            predictions = model.predict(df)
+            st.write("Accuracy score for GradientBoosting:", accuracy_score(y_test, predictions))
+    if check5:
+        with open('models/Stacking', 'rb') as file:
+            model = pickle.load(file)
+            predictions = model.predict(df)
+            st.write("Accuracy score for Stacking:", accuracy_score(y_test, predictions))
+    if check6:
+        model = tf.keras.models.load_model('models/NW_upd.h5')
+        predictions = model.predict(df)
+        accuracy = model.evaluate(df, y_test)
+        st.write("Accuracy score for NW:", accuracy)
+
 
 if selected == "Prediction Tool(features)":
     st.title(f"Welcome to {selected}")
