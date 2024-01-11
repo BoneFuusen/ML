@@ -6,5 +6,4 @@ seaborn
 tensorflow
 streamlit
 streamlit-option-menu
-pickle
 numpy
