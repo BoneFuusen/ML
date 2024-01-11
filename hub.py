@@ -173,7 +173,6 @@ if selected == "Prediction Tool(features)":
     check1 = st.checkbox('GaussianNB')
     check2 = st.checkbox('Bagging')
     check3 = st.checkbox('GradientBoosting')
-    check4 = st.checkbox('KMeans')
     check5 = st.checkbox('Stacking')
     check6 = st.checkbox('NW')
 
@@ -201,17 +200,6 @@ if selected == "Prediction Tool(features)":
                 st.write("Диабет")
     if check3:
         with open('models/GradientBoosting', 'rb') as file:
-            model = pickle.load(file)
-            prediction = model.predict(features)
-            st.subheader("Предсказанный диагноз:")
-            if prediction == 0:
-                st.write("Здоров")
-            if prediction == 1:
-                st.write("Преддиабет")
-            if prediction == 2:
-                st.write("Диабет")
-    if check4:
-        with open('models/GaussianNB', 'rb') as file:
             model = pickle.load(file)
             prediction = model.predict(features)
             st.subheader("Предсказанный диагноз:")
