@@ -13,7 +13,7 @@ with st.sidebar:
         menu_title="Hub",
         options=["Creator Info", "Dataset Info", "Dependencies Visualisation", "Prediction Tool(file)", "Prediction Tool(features)"],
         default_index=0,
-        icons=["info-circle", "database", "bar-chart-fill", "calculator", "calculator"],
+        icons=[],
         styles={
             "nav-link-selected": {'background-color': 'purple'},
         },
@@ -257,11 +257,3 @@ if selected == "Prediction Tool(features)":
             st.write("Преддиабет")
         if prediction == 2:
             st.write("Диабет")
-
-    
-
-
-
-
-
-        
